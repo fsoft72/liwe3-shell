@@ -25,6 +25,17 @@ const resolvePackageManager = () => {
 	return 'npm';
 };
 
+// checks if the project has git initialized
+const _checkGit = () => {
+	try {
+		execSync( 'git status', { stdio: 'ignore' } );
+		return true;
+	} catch ( e ) {
+		console.log( '\n\nERROR: git is not initialized. Please run "git init" first.\n' );
+		return false;
+	}
+};
+
 const gitAddSubmodule = ( submodule, alias ) => {
 	// console.log( `Adding submodule: ${ submodule }` );
 	execSync( `git submodule add --quiet ${ submodule } ${ alias }`, { stdio: 'inherit' } );
@@ -125,12 +136,24 @@ const _svelteConfig = () => {
 const svelteInit = ( pm, nodeServerPort ) => {
 	console.log( 'Initializing LiWE3 Svelte project...' );
 
+	if ( !_checkGit() ) return;
+
 	_svelteAddDepebdencies( pm );
 	_svelteAddSubmodules( pm );
 	_svelteCreateEnv( nodeServerPort );
 	_svelteCreateMaid();
 	_svelteCreateLayout();
 	_svelteConfig();
+};
+
+const nodeInit = ( pm, nodeServerPort ) => {
+	if ( !fs.existsSync( 'package.json' ) ) {
+		console.log( "\n\nERROR: this does not seem to be a Node project.\n" );
+		return;
+	}
+	console.log( 'Initializing LiWE3 Node project...' );
+
+	if ( !_checkGit() ) return;
 };
 
 const argv = yargs( hideBin( process.argv ) )
@@ -157,8 +180,6 @@ const argv = yargs( hideBin( process.argv ) )
 	.help()
 	.argv;
 
-console.log( '=== LIWE3' );
-
 // get the package manager (default to npm)
 argv.pm = argv.pm || resolvePackageManager();
 
@@ -173,6 +194,9 @@ switch ( argv._[ 0 ] ) {
 		if ( isSvelte ) {
 			console.log( 'Svelte project detected' );
 			svelteInit( argv.pm, argv.nodeServerPort );
+		} else {
+			console.log( 'Node project detected' );
+			nodeInit( argv.pm, argv.nodeServerPort );
 		}
 
 		break;
