@@ -11,7 +11,8 @@ const {
 } = require( './data/utils' );
 
 const {
-	svelteInit
+	svelteInit,
+	svelteCreateProject,
 } = require( './data/svelte_ops' );
 
 const {
@@ -91,7 +92,11 @@ switch ( argv._[ 0 ] ) {
 		console.log( 'Adding submodules:', argv.submodules );
 		break;
 	case 'create':
-		nodeCreateProject( argv.name, argv.pm, argv.nodeServerPort );
+		console.log( `Creating ${ argv.type } project: ${ argv.name }` );
+		if ( argv.type == 'nodejs' )
+			nodeCreateProject( argv.name, argv.pm, argv.nodeServerPort );
+		else if ( argv.type == 'svelte' )
+			svelteCreateProject( argv.name, argv.pm, argv.nodeServerPort );
 		break;
 	default:
 		console.log( `Mode: ${ argv.node ? 'Node' : 'Svelte' }` );

@@ -32,7 +32,7 @@ const checkGit = ( suppressError = false ) => {
 };
 
 const gitAddSubmodule = ( submodule, alias ) => {
-	console.log( "- Adding submodule: ", alias );
+	console.log( "  - Adding submodule: ", alias );
 	if ( fs.existsSync( alias ) ) {
 		console.log( `Submodule ${ alias } already exists. Skipping it.` );
 		return;

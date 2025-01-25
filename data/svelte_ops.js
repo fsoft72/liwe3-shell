@@ -1,5 +1,6 @@
 const { addDependencies, checkGit, gitAddSubmodule } = require( './utils' );
 const { maid, layout, config } = require( './svelte_files' );
+const { execSync } = require( 'child_process' );
 const fs = require( 'fs' );
 
 const _addDeps = ( pm ) => {
@@ -47,10 +48,7 @@ const _addSubmodules = ( pm ) => {
 
 	const modules = [ 'mediamanager', 'system', 'tag', 'theme', 'user' ];
 	modules.forEach( ( module ) => {
-		if ( !fs.existsSync( module ) ) {
-			console.log( `  - Adding ${ module } submodule...` );
-			gitAddSubmodule( `git@github.com:fsoft72/svelte-mod-${ module }`, module );
-		}
+		gitAddSubmodule( `git@github.com:fsoft72/svelte-mod-${ module }`, module );
 	} );
 
 	process.chdir( '../..' );
@@ -60,7 +58,7 @@ const _createEnv = ( nodeServerPort ) => {
 	// create .env file
 	if ( !fs.existsSync( '.env' ) ) {
 		console.log( '  - Creating .env file...' );
-		fs.writeFileSync( '.env', `PUBLIC_LIWE_SERVER=http://localhost:${ nodeServerPort }` );
+		fs.writeFileSync( '.env', `PUBLIC_LIWE_SERVER=http://localhost:${ nodeServerPort }\n` );
 	}
 };
 
@@ -90,7 +88,11 @@ const _config = () => {
 const svelteInit = ( pm, nodeServerPort ) => {
 	console.log( 'Initializing LiWE3 Svelte project...' );
 
-	if ( !checkGit() ) return;
+	if ( !checkGit( true ) ) {
+		console.log( '\n\nERROR: git is not initialized.\nPlease run "git init" first.\n' );
+		console.log( 'then run "npx liwe3 svelte init" again inside the project directory.\n' );
+		return;
+	}
 
 	_addDeps( pm );
 	_addSubmodules( pm );
@@ -100,6 +102,20 @@ const svelteInit = ( pm, nodeServerPort ) => {
 	_config();
 };
 
+const svelteCreateProject = ( projectName, pm, nodeServerPort ) => {
+	console.log( `Creating LiWE3 Svelte project ${ projectName }...` );
+
+	if ( fs.existsSync( projectName ) ) {
+		console.log( `ERROR: ${ projectName } already exists.` );
+		return;
+	}
+
+	execSync( `npx sv create ${ projectName }`, { stdio: 'inherit' } );
+	process.chdir( projectName );
+	svelteInit( pm, nodeServerPort );
+};
+
 module.exports = {
-	svelteInit
+	svelteInit,
+	svelteCreateProject
 };
