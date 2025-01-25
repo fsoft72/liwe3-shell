@@ -14,6 +14,10 @@ const {
 	svelteInit
 } = require( './data/svelte_ops' );
 
+const {
+	nodeCreateProject,
+} = require( './data/nodejs_ops' );
+
 
 const nodeInit = ( pm, nodeServerPort ) => {
 	if ( !fs.existsSync( 'package.json' ) ) {
@@ -27,7 +31,20 @@ const nodeInit = ( pm, nodeServerPort ) => {
 
 const argv = yargs( hideBin( process.argv ) )
 	.usage( 'Usage: $0 <command> [options]' )
+
 	.command( 'init', 'Initialize project' )
+	.command( 'create <type> <name>', 'Create new project', ( yargs ) => {
+		return yargs
+			.positional( 'type', {
+				describe: 'Project type (nodejs or svelte)',
+				type: 'string',
+				choices: [ 'nodejs', 'svelte' ]
+			} )
+			.positional( 'name', {
+				describe: 'Project name',
+				type: 'string'
+			} );
+	} )
 	.command( 'addsubmodule [submodules..]', 'Add submodules to project', ( yargs ) => {
 		return yargs.positional( 'submodules', {
 			describe: 'List of submodules to add',
@@ -72,6 +89,9 @@ switch ( argv._[ 0 ] ) {
 		break;
 	case 'addsubmodule':
 		console.log( 'Adding submodules:', argv.submodules );
+		break;
+	case 'create':
+		nodeCreateProject( argv.name, argv.pm, argv.nodeServerPort );
 		break;
 	default:
 		console.log( `Mode: ${ argv.node ? 'Node' : 'Svelte' }` );
