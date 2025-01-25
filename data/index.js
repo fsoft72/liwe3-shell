@@ -1,5 +1,5 @@
-const svelte = require( './svelte.js' );
+const svelteFiles = require( './svelte_files.js' );
 
 module.exports = {
-	svelte
+	svelteFiles
 };
