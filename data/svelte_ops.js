@@ -2,6 +2,7 @@ const { addDependencies, checkGit, gitAddSubmodule } = require( './utils' );
 const { maid, layout, config } = require( './svelte_files' );
 const { execSync } = require( 'child_process' );
 const fs = require( 'fs' );
+const { pm_run_script } = require( './pm_actions' );
 
 const _addDeps = ( pm ) => {
 	const deps = [
@@ -94,12 +95,21 @@ const svelteInit = ( pm, nodeServerPort ) => {
 		return;
 	}
 
+	rootDir = process.cwd();
+
 	_addDeps( pm );
 	_addSubmodules( pm );
+
+	process.chdir( rootDir );
+
 	_createEnv( nodeServerPort );
 	_createMaid();
 	_createLayout();
+
+	process.chdir( rootDir );
+
 	_config();
+	pm_run_script( pm, 'prepare' );
 };
 
 const svelteCreateProject = ( projectName, pm, nodeServerPort ) => {

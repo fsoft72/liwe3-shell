@@ -1,5 +1,6 @@
 const fs = require( 'fs' );
 const { execSync } = require( 'child_process' );
+const { pm_add_deps } = require( './pm_actions' );
 
 const checkIsSvelte = () => {
 	// if package.json does not exist, return false
@@ -43,9 +44,7 @@ const gitAddSubmodule = ( submodule, alias ) => {
 };
 
 const addDependencies = ( pm, deps, dev = false ) => {
-	const cmd = `${ pm } add ${ deps.join( ' ' ) } ${ dev ? '--save-dev' : '' }`;
-	// console.log( "=== CMD: ", cmd );
-	execSync( cmd, { stdio: 'inherit' } );
+	pm_add_deps( pm, deps, dev );
 };
 
 const createFile = ( path, content, overwrite = false, backup = false ) => {
