@@ -72,7 +72,7 @@ const _addDeps = ( pm ) => {
 	// add dependencies
 	const deps = [
 		[ "@fsoft/diff-patch", false ],
-		[ "arangojs@7.8.0", false ],
+		[ "arangojs", false ],
 		[ "body-parser", false ],
 		[ "cors", false ],
 		[ "exif", false ],
