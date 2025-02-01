@@ -92,14 +92,10 @@ const _addDeps = ( pm ) => {
 		[ "@types/exif", true ],
 		[ "@types/express@4.17.21", true ],
 		[ "@types/express-fileupload", true ],
-		[ "@types/jest", true ],
 		[ "@types/jsonwebtoken", true ],
 		[ "@types/mime-types", true ],
 		[ "@types/node", true ],
-		[ "concurrently", true ],
-		[ "jest", true ],
 		[ "nodemon", true ],
-		[ "ts-jest", true ],
 		[ "typescript", true ],
 	];
 
