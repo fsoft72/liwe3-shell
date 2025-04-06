@@ -18,6 +18,7 @@ const {
 
 const {
 	nodeCreateProject,
+	nodeAddSubmodule,
 } = require( './data/nodejs_ops' );
 
 
@@ -96,7 +97,7 @@ switch ( argv._[ 0 ] ) {
 			svelteAddSubmodule( argv.submodules );
 		} else {
 			console.log( 'Node project detected' );
-			// nodeAddSubmodule( argv.submodules );
+			nodeAddSubmodule( argv.submodules );
 		}
 		break;
 	case 'create':

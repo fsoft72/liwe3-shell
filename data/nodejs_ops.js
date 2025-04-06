@@ -47,6 +47,23 @@ const _addSubmodules = ( pm ) => {
 	} );
 };
 
+const _addSubmodule = ( submodule ) => {
+	// check that we are in the root directory of the project
+	if ( !fs.existsSync( 'server/modules' ) ) {
+		console.log( "\n\nERROR: run this command in the root directory of the node project.\n" );
+		return;
+	}
+	process.chdir( 'server/modules' );
+	// add submodule to the project (if not already added)
+	if ( !fs.existsSync( submodule ) ) {
+		console.log( `  - Adding submodule ${ submodule }...` );
+
+		gitAddSubmodule( `git@github.com:fsoft72/nodejs-mod-${ submodule }`, submodule );
+	}
+
+	process.chdir( '../..' );
+};
+
 const _createDataConfig = ( project_name, port ) => {
 	const content = replacePlaceholders( nodeFiles.dataConfig, {
 		'APP_NAME': project_name,
@@ -149,6 +166,12 @@ const nodeCreateProject = ( project_name, pm, port ) => {
 
 };
 
+const nodeAddSubmodule = ( submodule ) => {
+	_addSubmodule( submodule );
+};
+
+
 module.exports = {
-	nodeCreateProject
+	nodeCreateProject,
+	nodeAddSubmodule,
 };
