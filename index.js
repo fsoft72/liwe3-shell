@@ -13,6 +13,7 @@ const {
 const {
 	svelteInit,
 	svelteCreateProject,
+	svelteAddSubmodule,
 } = require( './data/svelte_ops' );
 
 const {
@@ -90,6 +91,13 @@ switch ( argv._[ 0 ] ) {
 		break;
 	case 'addsubmodule':
 		console.log( 'Adding submodules:', argv.submodules );
+		if ( isSvelte ) {
+			console.log( 'Svelte project detected' );
+			svelteAddSubmodule( argv.submodules );
+		} else {
+			console.log( 'Node project detected' );
+			// nodeAddSubmodule( argv.submodules );
+		}
 		break;
 	case 'create':
 		console.log( `Creating ${ argv.type } project: ${ argv.name }` );

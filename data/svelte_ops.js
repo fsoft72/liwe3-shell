@@ -55,6 +55,26 @@ const _addSubmodules = ( pm ) => {
 	process.chdir( '../..' );
 };
 
+const _addSubmodule = ( submodule ) => {
+	// check that we are in the root directory of the project
+	if ( !fs.existsSync( 'svelte.config.js' ) ) {
+		console.log( "\n\nERROR: you must be in the Svelte project main directory.\n" );
+		return;
+	}
+
+
+	process.chdir( 'src/modules' );
+	// add submodule to the project (if not already added)
+
+	if ( !fs.existsSync( submodule ) ) {
+
+		console.log( `  - Adding submodule ${ submodule }...` );
+		gitAddSubmodule( `git@github.com:fsoft72/svelte-mod-${ submodule }`, submodule );
+	}
+
+	process.chdir( '../..' );
+};
+
 const _createEnv = ( nodeServerPort ) => {
 	// create .env file
 	if ( !fs.existsSync( '.env' ) ) {
@@ -125,7 +145,18 @@ const svelteCreateProject = ( projectName, pm, nodeServerPort ) => {
 	svelteInit( pm, nodeServerPort );
 };
 
+const svelteAddSubmodule = ( submodule ) => {
+	if ( !checkGit( true ) ) {
+		console.log( '\n\nERROR: git is not initialized.\nPlease run "git init" first.\n' );
+		console.log( 'then run "npx liwe3 svelte add" again inside the project directory.\n' );
+		return;
+	}
+
+	_addSubmodule( submodule );
+};
+
 module.exports = {
 	svelteInit,
-	svelteCreateProject
+	svelteCreateProject,
+	svelteAddSubmodule
 };
