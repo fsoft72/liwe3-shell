@@ -89,6 +89,8 @@ const _addDeps = ( pm ) => {
 	// add dependencies
 	const deps = [
 		[ "@fsoft/diff-patch", false ],
+		[ "@aws-sdk/client-s3", false ],
+		[ "@aws-sdk/s3-request-presigner", false ],
 		[ "arangojs", false ],
 		[ "body-parser", false ],
 		[ "cors", false ],
