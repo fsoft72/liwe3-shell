@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const VERSION = '0.5.0';
+
 const fs = require( 'fs' );
 const yargs = require( 'yargs/yargs' );
 const { hideBin } = require( 'yargs/helpers' );
@@ -67,6 +69,7 @@ const argv = yargs( hideBin( process.argv ) )
 		choices: [ 'npm', 'yarn', 'pnpm' ],
 		default: 'pnpm'
 	} )
+	.version( VERSION )
 	.help()
 	.argv;
 
