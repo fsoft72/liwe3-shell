@@ -172,14 +172,7 @@ const layout = `<script lang="ts">
 				Disconnected
 			{/if}
 		</div>
-		<!--
-        {#if has_one_perm($user, ['user.admin'])}
-            <div style="padding: 15px">&nbsp;</div>
-        {/if}
-        -->
-		<div style="margin-bottom: 5em; width: 100%">
-			{@render children()}
-		</div>
+		{@render children()}
 	</div>
 {:else}
 	<div class="container">
@@ -191,6 +184,7 @@ const layout = `<script lang="ts">
 	.container {
 		display: flex;
 		flex-direction: column;
+		flex: 1;
 		justify-content: flex-start;
 		align-items: flex-start;
 

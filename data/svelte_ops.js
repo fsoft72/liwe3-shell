@@ -142,6 +142,7 @@ const svelteCreateProject = ( projectName, pm, nodeServerPort ) => {
 
 	execSync( `npx sv create ${ projectName }`, { stdio: 'inherit' } );
 	process.chdir( projectName );
+	execSync( `npx sv add --no-preconditions devtools-json`, { stdio: 'inherit' } );
 	svelteInit( pm, nodeServerPort );
 };
 
