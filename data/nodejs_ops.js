@@ -95,7 +95,7 @@ const _addDeps = ( pm ) => {
 		[ "body-parser", false ],
 		[ "cors", false ],
 		[ "exif", false ],
-		[ "express@4.19.2", false ],
+		[ "express", false ],
 		[ "express-dump-curl", false ],
 		[ "express-fileupload", false ],
 		[ "handlebars", false ],
@@ -106,6 +106,7 @@ const _addDeps = ( pm ) => {
 		[ "pdf-lib", false ],
 		[ "sharp", false ],
 		[ "socket.io", false ],
+		[ "zod", false ],
 
 		[ "@types/body-parser", true ],
 		[ "@types/exif", true ],

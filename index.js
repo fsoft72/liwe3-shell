@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const VERSION = '0.6.0';
+const VERSION = '0.6.1';
 
 const fs = require( 'fs' );
 const yargs = require( 'yargs/yargs' );
