@@ -1,0 +1,27 @@
+{
+  "chrome-devtools": {
+    "type": "stdio",
+    "command": "npx",
+    "args": [
+      "chrome-devtools-mcp@latest"
+    ],
+    "env": {}
+  },
+  "svelte": {
+    "type": "http",
+    "url": "https://mcp.svelte.dev/mcp"
+  },
+  "gitnexus": {
+    "command": "{{gitNexusPath()}}",
+    "args": [
+      "mcp"
+    ]
+  },
+  "n8n-mcp": {
+    "type": "http",
+    "url": "${N8N_MCP_SERVER_URL}",
+    "headers": {
+      "Authorization": "Bearer ${N8N_MCP_API_KEY}"
+    }
+  }
+}
