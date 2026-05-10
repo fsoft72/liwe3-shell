@@ -12,12 +12,12 @@
     "url": "https://mcp.svelte.dev/mcp"
   },
   "gitnexus": {
-    "command": "{{gitNexusPath()}}",
+    "command": "${GITNEXUS_BIN_PATH||gitnexus}",
     "args": [
       "mcp"
     ]
   },
-  "n8n-mcp": {
+  "n8n": {
     "type": "http",
     "url": "${N8N_MCP_SERVER_URL}",
     "headers": {
