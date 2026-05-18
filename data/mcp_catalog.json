@@ -17,6 +17,11 @@
       "mcp"
     ]
   },
+  "codegraph": {
+      "type": "stdio",
+      "command": "codegraph",
+      "args": ["serve", "--mcp"]
+  },
   "n8n": {
     "type": "http",
     "url": "${N8N_MCP_SERVER_URL}",
