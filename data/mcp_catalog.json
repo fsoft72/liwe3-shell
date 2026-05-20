@@ -22,6 +22,13 @@
       "command": "codegraph",
       "args": ["serve", "--mcp"]
   },
+  "play-store": {
+    "command": "uvx",
+    "args": ["play-store-mcp"],
+    "env": {
+      "GOOGLE_APPLICATION_CREDENTIALS": "${GOOGLE_APPLICATION_CREDENTIALS}"
+    }
+  },
   "n8n": {
     "type": "http",
     "url": "${N8N_MCP_SERVER_URL}",
