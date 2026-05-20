@@ -22,6 +22,9 @@
       "command": "codegraph",
       "args": ["serve", "--mcp"]
   },
+  "cloudflare": {
+      "url": "https://mcp.cloudflare.com/mcp"
+  },
   "play-store": {
     "command": "uvx",
     "args": ["play-store-mcp"],
