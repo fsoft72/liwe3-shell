@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const VERSION = "0.9.1";
+const VERSION = "0.10.0";
 
 const yargs = require( "yargs/yargs" );
 const { hideBin } = require( "yargs/helpers" );
@@ -15,11 +15,17 @@ const argv = yargs( hideBin( process.argv ) )
 		"create [folder]",
 		"Create new LiWE3 Cloudflare project",
 		( yargs ) => {
-			return yargs.positional( "folder", {
-				describe:
-					"Project folder name (uses current dir if omitted, must be empty)",
-				type: "string",
-			} );
+			return yargs
+				.positional( "folder", {
+					describe:
+						"Project folder name (uses current dir if omitted, must be empty)",
+					type: "string",
+				} )
+				.option( "app", {
+					describe: "Name of the app",
+					type: "string",
+					demandOption: true,
+				} );
 		},
 	)
 	.command( "init", "Initialize working repo (install deps, run setup scripts)" )
@@ -44,7 +50,7 @@ const argv = yargs( hideBin( process.argv ) )
 
 switch ( argv._[ 0 ] ) {
 	case "create":
-		cfCreate( argv.folder );
+		cfCreate( argv.folder, argv.app );
 		break;
 	case "init":
 		cfInit();

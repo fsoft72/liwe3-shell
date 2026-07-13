@@ -9,8 +9,9 @@ const LIWE3_CF_REPO = 'git@github.com:fsoft72/cf-liwe3-ng';
  * Sets up git, adds the liwe3-cloudflare remote and merges it into the current branch.
  *
  * @param {string} [folder] - Optional folder to create and initialize. If omitted, uses current dir (must be empty).
+ * @param {string} appName - Name of the app.
  */
-const cfCreate = ( folder ) => {
+const cfCreate = ( folder, appName ) => {
 	if ( folder ) {
 		if ( fs.existsSync( folder ) ) {
 			console.log( `ERROR: folder '${ folder }' already exists.` );
@@ -33,6 +34,34 @@ const cfCreate = ( folder ) => {
 	execSync( `git remote add ${ LIWE3_CF_REMOTE } ${ LIWE3_CF_REPO }`, { stdio: 'inherit' } );
 	execSync( `git fetch ${ LIWE3_CF_REMOTE }`, { stdio: 'inherit' } );
 	execSync( `git merge --allow-unrelated-histories ${ LIWE3_CF_REMOTE }/master`, { stdio: 'inherit' } );
+
+	const backendDir = 'app/backend';
+	if ( fs.existsSync( backendDir ) ) {
+		const devVarsExample = `${ backendDir }/.dev.vars.example`;
+		const devVars = `${ backendDir }/.dev.vars`;
+		if ( fs.existsSync( devVarsExample ) ) {
+			fs.copyFileSync( devVarsExample, devVars );
+			console.log( `Copied ${ devVarsExample } to ${ devVars }` );
+		}
+
+		const pkgExample = `${ backendDir }/package.json.example`;
+		const pkg = `${ backendDir }/package.json`;
+		if ( fs.existsSync( pkgExample ) ) {
+			let content = fs.readFileSync( pkgExample, 'utf8' );
+			content = content.replace( /APP_NAME/g, appName );
+			fs.writeFileSync( pkg, content, 'utf8' );
+			console.log( `Generated ${ pkg } with APP_NAME replaced by ${ appName }` );
+		}
+
+		const wranglerExample = `${ backendDir }/wrangler.jsonc.example`;
+		const wrangler = `${ backendDir }/wrangler.jsonc`;
+		if ( fs.existsSync( wranglerExample ) ) {
+			let content = fs.readFileSync( wranglerExample, 'utf8' );
+			content = content.replace( /APP_NAME/g, appName );
+			fs.writeFileSync( wrangler, content, 'utf8' );
+			console.log( `Generated ${ wrangler } with APP_NAME replaced by ${ appName }` );
+		}
+	}
 
 	console.log( '\nLiWE3 Cloudflare project created.' );
 };
