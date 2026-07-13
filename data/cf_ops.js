@@ -2,7 +2,7 @@ const fs = require( 'fs' );
 const { execSync } = require( 'child_process' );
 
 const LIWE3_CF_REMOTE = 'liwe3cf';
-const LIWE3_CF_REPO = 'git@github.com:fsoft72/liwe3-cloudflare';
+const LIWE3_CF_REPO = 'git@github.com:fsoft72/cf-liwe3-ng';
 
 /**
  * Creates a new LiWE3 Cloudflare project.
