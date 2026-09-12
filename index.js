@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const VERSION = "0.11.0";
+const VERSION = "0.14.0";
 
 const yargs = require( "yargs/yargs" );
 const { hideBin } = require( "yargs/helpers" );
