@@ -129,7 +129,7 @@ const _copyTrackedFiles = ( src, destDir ) => {
  * @param {string} appName - Name of the app.
  */
 const cfCreate = ( folder, appName ) => {
-	if ( folder ) {
+	if ( folder && folder !== '.' ) {
 		if ( fs.existsSync( folder ) ) {
 			console.log( `ERROR: folder '${ folder }' already exists.` );
 			return;
@@ -138,10 +138,13 @@ const cfCreate = ( folder, appName ) => {
 		fs.mkdirSync( folder, { recursive: true } );
 		process.chdir( folder );
 	} else {
-		const files = fs.readdirSync( '.' );
-		if ( files.length > 0 ) {
-			console.log( 'ERROR: current directory is not empty. Pass a folder name or run in an empty directory.' );
-			return;
+		const hasGit = fs.existsSync( '.git' );
+		if ( !hasGit ) {
+			const files = fs.readdirSync( '.' );
+			if ( files.length > 0 ) {
+				console.log( 'ERROR: current directory is not empty and has no .git. Pass a folder name or run in an empty directory.' );
+				return;
+			}
 		}
 	}
 
